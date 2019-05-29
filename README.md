@@ -1,6 +1,4 @@
-[![Build Status](https://travis-ci.org/doochik/babel-plugin-transform-react-ssr-try-catch.svg?branch=master)](https://travis-ci.org/doochik/babel-plugin-transform-react-ssr-try-catch)
-
-# @dwicao/babel-plugin-transform-react-ssr-try-catch
+# dwicao-babel-plugin-transform-react-ssr-try-catch
 
 Babel plugin to wrap render() method in React.Component with try-catch statement.
 
@@ -53,7 +51,7 @@ Actually, this is a temporary solution until React has support error handling in
 ## Installation
 
 ```sh
-npm install --save-dev @dwicao/babel-plugin-transform-react-ssr-try-catch
+npm install --save-dev dwicao-babel-plugin-transform-react-ssr-try-catch
 ```
 
 ## Usage
