@@ -23,7 +23,7 @@ class MyComponent extends React.PureComponent {
 }
 ```
 
-This component will be transformed to:
+That component will be transformed to:
 
 ```js
 // MyComponent.js
@@ -61,7 +61,7 @@ npm install --save-dev dwicao-babel-plugin-transform-react-ssr-try-catch
 ```json
 {
   "plugins": [
-    ["react-ssr-try-catch"]
+    ["dwicao-babel-plugin-transform-react-ssr-try-catch"]
   ]
 }
 ```
