@@ -1,6 +1,6 @@
 {
-  "name": "@doochik/babel-plugin-transform-react-ssr-try-catch",
-  "version": "2.0.2",
+  "name": "@dwicao/babel-plugin-transform-react-ssr-try-catch",
+  "version": "3.0.0",
   "description": "Wraps render() method in React.Component with try-catch statement",
   "main": "src/index.js",
   "scripts": {
@@ -10,14 +10,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/doochik/babel-plugin-transform-react-ssr-try-catch.git"
+    "url": "git+https://github.com/dwicao/babel-plugin-transform-react-ssr-try-catch.git"
   },
   "author": "Aleksei Androsov <aandrosov@yandex-team.ru>",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/doochik/babel-plugin-transform-react-ssr-try-catch/issues"
+    "url": "https://github.com/dwicao/babel-plugin-transform-react-ssr-try-catch/issues"
   },
-  "homepage": "https://github.com/doochik/babel-plugin-transform-react-ssr-try-catch#readme",
+  "homepage": "https://github.com/dwicao/babel-plugin-transform-react-ssr-try-catch#readme",
   "devDependencies": {
     "babel-core": "^6.26.3",
     "babel-plugin-syntax-jsx": "^6.18.0",
