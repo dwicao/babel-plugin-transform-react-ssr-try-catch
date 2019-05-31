@@ -1,4 +1,4 @@
-# dwicao-babel-plugin-transform-react-ssr-try-catch
+### DEPRECATED: This feature was already implemented on the original source since v3.0.0, so please use from [https://github.com/doochik/babel-plugin-transform-react-ssr-try-catch](https://github.com/doochik/babel-plugin-transform-react-ssr-try-catch) instead, Sorry for the inconvenience!
 
 Babel plugin to wrap render() method in React.Component with try-catch statement.
 
