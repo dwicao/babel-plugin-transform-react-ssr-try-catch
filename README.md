@@ -1,4 +1,6 @@
-### DEPRECATED: This feature was already implemented on the original source since v3.0.0, so please use from [https://github.com/doochik/babel-plugin-transform-react-ssr-try-catch](https://github.com/doochik/babel-plugin-transform-react-ssr-try-catch) instead, Sorry for the inconvenience!
+[![Build Status](https://travis-ci.org/doochik/babel-plugin-transform-react-ssr-try-catch.svg?branch=master)](https://travis-ci.org/doochik/babel-plugin-transform-react-ssr-try-catch)
+
+# @doochik/babel-plugin-transform-react-ssr-try-catch
 
 Babel plugin to wrap render() method in React.Component with try-catch statement.
 
@@ -6,62 +8,114 @@ Babel plugin to wrap render() method in React.Component with try-catch statement
 
 React 16 has [error handling](https://reactjs.org/blog/2017/09/26/react-v16.0.html#better-error-handling) but for [client rendering only](https://github.com/facebook/react/issues/10442).
 
-This plugin performs simple transform which wraps `render()` method with try-catch.
-Just make sure to put `ERRORBOUNDARY_render()` method in your Class-based components.
+This plugin performs simple transform which wraps event render() method with try-catch.
 Example:
-
 ```js
 // MyComponent.js
-class MyComponent extends React.PureComponent {
-  ERRORBOUNDARY_render() {
-    return <p>An error happened. Please try again later!</p>;
-  }
 
+class MyCompoenent extends React.PureComponent {
   render() {
-    return <div />;
+    return <div/>;
   }
 }
 ```
 
-That component will be transformed to:
-
+This component will be transofmed to:
 ```js
 // MyComponent.js
-class MyComponent extends React.PureComponent {
-  render() {
-    try {
-      return this.__originalRenderMethod__();
-    } catch (e) {
-      return this.ERRORBOUNDARY_render(e, this.constructor.name);
-    }
-  }
+const ReactSSRErrorHandler = require('./path/to/my/SSRErrorHandler.js');
 
-  ERRORBOUNDARY_render() {
-    return <p>An error happened. Please try again later!</p>;
+class MyCompoenent extends React.PureComponent {
+  render() {
+      try {
+          return this.__originalRenderMethod__();
+      } catch (e) {
+          return ReactSSRErrorHandler(e, this.constructor.name);
+      }
   }
 
   __originalRenderMethod__() {
-    return <div />;
+      return <div />;
   }
 }
 ```
 
-Actually, this is a temporary solution until React has support error handling in SSR.
+Actually, this is temporary solution until React doesn't support error handling in SSR.
 
 ## Installation
 
 ```sh
-npm install --save-dev dwicao-babel-plugin-transform-react-ssr-try-catch
+npm install --save-dev @doochik/babel-plugin-transform-react-ssr-try-catch
 ```
 
 ## Usage
+
+**You should enable this plugin only for server build. Use React 16 error boundaries from client build.**
 
 **.babelrc**
 
 ```json
 {
-  "plugins": [
-    ["dwicao-babel-plugin-transform-react-ssr-try-catch"]
-  ]
+    "plugins": [
+        ["react-ssr-try-catch", {
+            // global errorHandler
+            "errorHandler": "./path/to/my/SSRErrorHandler.js",
+            // component error render method
+            "errorRenderMethod": "renderErrorState",
+        }]
+    ]
+}
+```
+
+## Options
+
+### `errorHandler`
+
+Path to your errorHandler module.
+This is simple function with two arguments `(error, componentName)`
+
+```js
+// SSRErrorHandler.js
+
+module.exports = (error, componentName) => {
+   // here you can log error and return fallback component or null.
+}
+```
+
+### `errorRenderMethod`
+
+Component method name to render error state
+Method invokes with two arguments `(error, componentName)`
+
+```js
+// original component
+
+class TestComponent extends React.PureComponent {
+    render() {
+        return <div/>;
+    }
+
+    renderErrorState() {
+        return <p>oops!</p>;
+    }
+}
+
+// component after transformation
+class TestComponent extends React.PureComponent {
+    render() {
+        try {
+            return this.__originalRenderMethod__();
+        } catch (e) {
+            return this.renderErrorState(e, this.constructor.name);
+        }
+    }
+
+    renderErrorState() {
+        return <p>oops!</p>;
+    }
+
+    __originalRenderMethod__() {
+        return <div />;
+    }
 }
 ```
